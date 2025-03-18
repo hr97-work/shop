@@ -7,7 +7,10 @@ import { Product, ProductListProps, SortOrder } from '@/typedefs';
 const ProductList = ({ products }: ProductListProps) => {
   const router = useRouter();
   const [sortedProducts, setSortedProducts] = useState<Product[]>(products);
-  const [sortOrder, setSortOrder] = useState<SortOrder>({ title: 'asc', price: 'asc' });
+  const [sortOrder, setSortOrder] = useState<SortOrder>({
+    title: router.query.sortByTitle?.toString() as 'asc' | 'desc' || 'asc',
+    price: router.query.sortByPrice?.toString() as 'asc' | 'desc' || 'asc'
+  });
 
   const sortProducts = (field: 'title' | 'price', order: 'asc' | 'desc', products: Product[]) => {
     const sorted = [...products].sort((a, b) => {
