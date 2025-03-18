@@ -17,13 +17,30 @@ const Sidebar = ({ onFiltersApply, filters, availablePriceRange }: SidebarProps)
     onFiltersApply(localFilters);
   };
 
-  useEffect(() => setLocalFilters(filters), [filters])
+  const clearFilters = () => {
+    onFiltersApply({
+      range: availablePriceRange,
+      withBrand: false,
+    })
+  };
+
+  useEffect(() => setLocalFilters(filters), [filters]);
 
   return (
     <Box sx={{ padding: 3, maxWidth: 250, height: 'auto', borderRadius: 2, position: 'fixed' }}>
-      <Typography variant="h6" sx={{ marginBottom: 2 }}>
-        Filters
-      </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 }}>
+        <Typography variant="h6">
+          Filters
+        </Typography>
+        <Typography
+          variant="body2"
+          color="primary"
+          sx={{ cursor: 'pointer' }}
+          onClick={clearFilters}
+        >
+          Reset Filters
+        </Typography>
+      </Box>
 
       <Typography variant="subtitle1" sx={{ marginBottom: 1 }}>
         Price Range
