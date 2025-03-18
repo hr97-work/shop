@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { Box, Typography, Card, CardContent, CardMedia, Button, Rating, Divider, IconButton, Dialog, DialogContent } from '@mui/material';
+import { Box, Typography, Card, CardContent, CardMedia, Button, Rating, Divider, IconButton, Dialog, DialogContent, Tooltip } from '@mui/material';
 import { ArrowBack, ChevronLeft, ChevronRight } from '@mui/icons-material';
 import { products } from '@/utils/mockData';
 import { Product, ProductPageProps } from '@/typedefs';
@@ -17,17 +17,26 @@ const ProductPage = ({ product }: ProductPageProps) => {
   const [open, setOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
 
+  const handleGoBack = () => {
+    router.back();
+  };
+
+  const renderGoBackButton = () => (
+    <Tooltip title="Go Back">
+      <IconButton onClick={handleGoBack}>
+        <ArrowBack />
+      </IconButton>
+    </Tooltip>
+  )
+
   if (!product) {
     return (
-      <Box sx={{ padding: 3 }}>
+      <Box sx={{ padding: 3, display: 'flex', alignItems: 'center' }}>
+        {renderGoBackButton()}
         <Typography variant="h5">Product not found</Typography>
       </Box>
     );
   }
-
-  const handleGoBack = () => {
-    router.back();
-  };
 
   const handleImageClick = (index: number) => {
     setSelectedImageIndex(index);
@@ -53,9 +62,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
   return (
     <Box sx={{ padding: 3 }}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <IconButton onClick={handleGoBack}>
-          <ArrowBack />
-        </IconButton>
+        {renderGoBackButton()}
         <Typography variant="h4" gutterBottom sx={{ marginBottom: 0 }}>
           {product.title}
         </Typography>
@@ -181,16 +188,14 @@ const ProductPage = ({ product }: ProductPageProps) => {
           </Box>
         </Box>
       )}
-
-      {/* Full Image Dialog (Lightbox) */}
       <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
         <DialogContent sx={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
           {selectedImage && (
             <Image src={selectedImage} alt="Full Image" height={500} width={500} layout="intrinsic" />
           )}
 
-          {/* Arrows to navigate images */}
           <IconButton
+            disabled={product.images.length < 2}
             onClick={handlePreviousImage}
             sx={{
               position: 'absolute',
@@ -206,6 +211,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
           </IconButton>
 
           <IconButton
+            disabled={product.images.length < 2}
             onClick={handleNextImage}
             sx={{
               position: 'absolute',
@@ -230,11 +236,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { id } = params!;
 
   const mockProducts: Product[] = products;
-  const product = mockProducts.find((product) => product.id === Number(id));
-
-  if (!product) {
-    return { notFound: true };
-  }
+  const product = mockProducts.find((product) => product.id === Number(id)) || null;
 
   return {
     props: {
