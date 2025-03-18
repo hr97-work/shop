@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { Box, Typography, Card, CardContent, CardMedia, Button, Rating, Divider, IconButton, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Box, Typography, Card, CardContent, CardMedia, Button, Rating, Divider, IconButton, Dialog, DialogContent } from '@mui/material';
 import { ArrowBack, ChevronLeft, ChevronRight } from '@mui/icons-material';
 import { products } from '@/utils/mockData';
 import { Product, ProductPageProps } from '@/typedefs';
@@ -31,7 +31,7 @@ const ProductPage = ({ product }: ProductPageProps) => {
 
   const handleImageClick = (index: number) => {
     setSelectedImageIndex(index);
-    setOpen(true);  // Open the lightbox (full image view)
+    setOpen(true);
   };
 
   const handleClose = () => {
@@ -39,12 +39,12 @@ const ProductPage = ({ product }: ProductPageProps) => {
   };
 
   const handleNextImage = () => {
-    setSelectedImageIndex((prevIndex) => (prevIndex + 1) % product.images.length); // Infinite next
+    setSelectedImageIndex((prevIndex) => (prevIndex + 1) % product.images.length);
   };
 
   const handlePreviousImage = () => {
     setSelectedImageIndex(
-      (prevIndex) => (prevIndex - 1 + product.images.length) % product.images.length // Infinite previous
+      (prevIndex) => (prevIndex - 1 + product.images.length) % product.images.length
     );
   };
 

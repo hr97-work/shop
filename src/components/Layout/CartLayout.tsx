@@ -5,18 +5,10 @@ import { useCart } from '@/contexts/CartContext';
 const CartLayout = () => {
   const { drawerOpen, toggleDrawer } = useCart();
 
-  const handleDrawerOpen = () => {
-    toggleDrawer(true);
-  };
-
-  const handleDrawerClose = () => {
-    toggleDrawer(false);
-  };
-
   return (
     <>
-      <CartIconButton onClick={handleDrawerOpen} />
-      <CartDrawer open={drawerOpen} onClose={handleDrawerClose} />
+      <CartIconButton onClick={toggleDrawer} />
+      <CartDrawer open={drawerOpen} onClose={toggleDrawer} />
     </>
   );
 };

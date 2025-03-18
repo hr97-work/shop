@@ -76,7 +76,7 @@ export interface CartContextType {
   getTotal: () => string;
   getTotalQuantity: () => number;
   drawerOpen: boolean;
-  toggleDrawer: (value: boolean) => void;
+  toggleDrawer: () => void;
   emptyCart: () => void;
 }
 

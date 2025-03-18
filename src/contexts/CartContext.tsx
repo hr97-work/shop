@@ -5,7 +5,9 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<Product[]>([]);
-  const [drawerOpen, toggleDrawer] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const toggleDrawer = () => setDrawerOpen((isOpen) => !isOpen)
 
   const addToCart = (product: Product) => {
     setCart(prevCart => {

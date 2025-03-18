@@ -6,10 +6,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Image from 'next/image';
 import { CartDrawerProps } from '@/typedefs';
 import { useRouter } from 'next/router';
-import { callWithoutPropogation } from '@/utils/helper';
 
 const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
-  const { cart, emptyCart, removeItem, updateQuantity, getTotal } = useCart();
+  const { cart, emptyCart, removeItem, updateQuantity, getTotal, toggleDrawer } = useCart();
   const router = useRouter()
 
   const changeQuantity = (id: number, count: number) => {
@@ -21,6 +20,7 @@ const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
 
   const openProduct = (id: number) => {
     router.push(`/product/${id}`);
+    toggleDrawer()
   }
 
   return (
@@ -72,9 +72,8 @@ const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <IconButton onClick={(e) => {
-                        // e.stopPropagation()
-                        // changeQuantity(item.id, -1)
-                        callWithoutPropogation(e, () => changeQuantity(item.id, -1))
+                        e.stopPropagation()
+                        changeQuantity(item.id, -1)
                       }} size="small">
                         <RemoveIcon />
                       </IconButton>
