@@ -27,7 +27,7 @@ const Sidebar = ({ onFiltersApply, filters, availablePriceRange }: SidebarProps)
   useEffect(() => setLocalFilters(filters), [filters]);
 
   return (
-    <Box sx={{ padding: 3, maxWidth: 250, height: 'auto', borderRadius: 2, position: 'fixed' }}>
+    <Box sx={{ padding: 3, maxWidth: 300, height: 'auto', borderRadius: 2, position: 'fixed' }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 }}>
         <Typography variant="h6">
           Filters
